@@ -5,8 +5,8 @@ import { useWeb3Context } from "../context/Web3Context"
 import { useMagicContext } from "../context/MagicContext"
 import { Networks } from "../utils/networks"
 import { Connection, LAMPORTS_PER_SOL, PublicKey } from "@solana/web3.js"
-/// @ts-ignore
-import * as fcl from "@onflow/fcl"
+///@ts-ignore
+import * as fcl from "@onflow/fcl-1.3.2"
 
 const UserDetails = () => {
   const { user, setUser } = useUserContext()
@@ -14,6 +14,7 @@ const UserDetails = () => {
   const { selectedNetwork } = useMagicContext()
 
   useEffect(() => {
+    console.log("fetching balance")
     if (!user) return
     const fetchBalance = async () => {
       let newUser = null
