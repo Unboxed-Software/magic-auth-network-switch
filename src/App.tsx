@@ -1,26 +1,65 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import Login from "./pages/login"
+import Dashboard from "./pages/dashboard"
+import Callback from "./pages/callback"
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Router>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/callback" element={<Callback />} />
+      </Routes>
+    </Router>
+  )
 }
 
-export default App;
+export default App
+
+// // App.tsx
+// import { VStack } from "@chakra-ui/react"
+// import NetworkSelect from "./components/NetworkSelect"
+// import UserDetails from "./components/UserDetail"
+// import { useUserContext } from "./context/UserContext"
+// import Login from "./pages/Login"
+// import Logout from "./components/Logout"
+// import { useMagicContext } from "./context/MagicContext"
+// import { useEffect } from "react"
+
+// function App() {
+//   const { user, setUser, fetchUserAndBalance } = useUserContext()
+//   const { magic } = useMagicContext()
+
+//   const finishSocialLogin = async () => {
+//     try {
+//       const result = await magic?.oauth.getRedirectResult()
+//       console.log(result)
+//       const userMetaData = await magic?.user.getMetadata()
+//       console.log(userMetaData)
+//       //   await fetchUserAndBalance()
+//     } catch (err) {
+//       console.error(err)
+//     }
+//   }
+
+//   useEffect(() => {
+//     finishSocialLogin()
+//   }, [magic])
+
+//   return (
+//     <VStack>
+//       {!user ? (
+//         <Login />
+//       ) : (
+//         <>
+//           <Logout />
+//           <NetworkSelect />
+//           <UserDetails />
+//         </>
+//       )}
+//     </VStack>
+//   )
+// }
+
+// export default App
