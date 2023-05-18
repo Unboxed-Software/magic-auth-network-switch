@@ -1,4 +1,6 @@
 import { EthNetworkConfiguration } from "magic-sdk"
+import { FlowConfig } from "@magic-ext/flow/dist/types/type"
+import { SolanaConfig } from "@magic-ext/solana/dist/types/type"
 
 export enum Networks {
   Ethereum = "Ethereum (Goerli)",
@@ -6,12 +8,19 @@ export enum Networks {
   Polygon = "Polygon (Mumbai)",
   Optimism = "Optimism (Goerli)",
   Solana = "Solana (Devnet)",
+  Flow = "Flow (Testnet)",
 }
 
 export const formattedNetwork = (
   selectedNetwork: Networks
-): EthNetworkConfiguration => {
+): EthNetworkConfiguration | FlowConfig | SolanaConfig => {
+  // ): any => {
   switch (selectedNetwork) {
+    case Networks.Flow:
+      return {
+        rpcUrl: "https://rest-testnet.onflow.org",
+        network: "testnet",
+      }
     case Networks.Solana:
       return {
         rpcUrl: "https://api.devnet.solana.com",

@@ -1,7 +1,19 @@
 import { createContext, useState, useContext, useEffect } from "react"
 import { useMagicContext } from "./MagicContext"
 
-// todo: add types
+// interface UserBase {
+//   issuer?: string | null
+//   publicAddress?: string | null
+//   email?: string | null
+//   isMfaEnabled?: boolean
+//   phoneNumber?: string | null
+//   walletType?: string | null
+//   balance?: number
+//   chainId?: number
+// }
+
+// export type User = UserBase & { [key: string]: any }
+
 export type User = any
 
 export type UserContextType = {
@@ -11,7 +23,7 @@ export type UserContextType = {
 }
 
 const UserContext = createContext<UserContextType>({
-  user: null, // Default user state
+  user: null,
   setUser: () => {},
   fetchUserInfo: () => {},
 })
@@ -24,10 +36,9 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   const fetchUserInfo = async () => {
     try {
-      console.log("FETCHING USER METADATA")
       if (magic) {
         const userInfo = await magic.user.getInfo()
-        console.log("USER METADATA: ", userInfo)
+        console.log("UserInfo:", JSON.stringify(userInfo, null, 2))
         setUser(userInfo)
       }
     } catch (error) {

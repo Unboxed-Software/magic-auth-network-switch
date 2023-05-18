@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import { useEffect } from "react"
 import { Box, Text } from "@chakra-ui/react"
 import { useUserContext } from "../context/UserContext"
 import { useWeb3Context } from "../context/Web3Context"
@@ -12,6 +12,7 @@ const UserDetails = () => {
   const { selectedNetwork } = useMagicContext()
 
   useEffect(() => {
+    if (!user) return
     const fetchBalance = async () => {
       let newUser = null
       if (selectedNetwork === Networks.Solana) {
@@ -24,6 +25,9 @@ const UserDetails = () => {
         )
         newUser = { ...user, balance: balance / LAMPORTS_PER_SOL }
         console.log("BALANCE: ", balance)
+      } else if (selectedNetwork === Networks.Flow) {
+        // TODO: Implement Flow balance fetch
+        return
       } else {
         const balance = await web3?.eth.getBalance(user.publicAddress!)
         const balanceInEth = web3?.utils.fromWei(balance!).substring(0, 7)

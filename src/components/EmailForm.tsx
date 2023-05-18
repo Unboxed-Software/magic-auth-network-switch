@@ -36,9 +36,7 @@ const EmailForm = () => {
 
   return (
     <VStack>
-      <Center as="h3" fontSize="xl" mt={3}>
-        Login
-      </Center>
+      <Center color="gray.500">Login</Center>
       <InputGroup size="md" mb={3} mx="auto" w="80%">
         <InputLeftElement>
           <EmailIcon color="gray.300" />

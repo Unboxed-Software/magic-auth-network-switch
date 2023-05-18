@@ -5,7 +5,7 @@ import { VStack } from "@chakra-ui/react"
 
 const Dashboard = () => {
   return (
-    <VStack>
+    <VStack justifyContent="center" alignItems="center" minH="100vh">
       <UserDetails />
       <NetworkSelect />
       <Logout />

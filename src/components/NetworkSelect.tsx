@@ -19,6 +19,7 @@ const NetworkSelect = () => {
     Networks.Optimism,
     Networks.Sepolia,
     Networks.Solana,
+    Networks.Flow,
   ]
   const { selectedNetwork, updateMagicInstance } = useMagicContext()
 

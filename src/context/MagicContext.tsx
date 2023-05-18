@@ -10,6 +10,9 @@ import { Networks, formattedNetwork } from "../utils/networks"
 import { OAuthExtension } from "@magic-ext/oauth"
 import { SDKBase, InstanceWithExtensions } from "@magic-sdk/provider"
 import { SolanaExtension } from "@magic-ext/solana"
+import { FlowExtension } from "@magic-ext/flow"
+import { SolanaConfig } from "@magic-ext/solana/dist/types/type"
+import { FlowConfig } from "@magic-ext/flow/dist/types/type"
 
 const magicKey = "pk_live_72F093D51AD88B5B"
 
@@ -46,9 +49,14 @@ export const MagicProvider = ({ children }: { children: React.ReactNode }) => {
     if (network === Networks.Solana) {
       magic = new Magic(magicKey, {
         extensions: [
-          new SolanaExtension({
-            rpcUrl: network,
-          }),
+          new SolanaExtension(formattedNetwork(network) as SolanaConfig),
+          new OAuthExtension(),
+        ],
+      })
+    } else if (network === Networks.Flow) {
+      magic = new Magic(magicKey, {
+        extensions: [
+          new FlowExtension(formattedNetwork(network) as FlowConfig),
           new OAuthExtension(),
         ],
       })

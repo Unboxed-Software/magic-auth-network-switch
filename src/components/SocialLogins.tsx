@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Box, Button, Text, Center, VStack } from "@chakra-ui/react"
+import { Button, Center, VStack } from "@chakra-ui/react"
 import { useMagicContext } from "../context/MagicContext"
 import { OAuthProvider } from "@magic-ext/oauth"
 
