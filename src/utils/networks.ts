@@ -37,7 +37,7 @@ export const formattedNetwork = (
       }
     case Networks.Sepolia:
       return {
-        rpcUrl: "https://eth-sepolia.g.alchemy.com/v2/demo",
+        rpcUrl: "https://rpc2.sepolia.org/",
         chainId: 11155111,
       }
     default:

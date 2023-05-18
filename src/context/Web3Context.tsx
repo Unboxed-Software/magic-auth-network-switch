@@ -18,7 +18,11 @@ export const Web3Provider = ({ children }: { children: React.ReactNode }) => {
   const [web3Instance, setWeb3Instance] = useState<Web3 | null>(null)
 
   useEffect(() => {
-    if (selectedNetwork === Networks.Solana) return
+    if (
+      selectedNetwork === Networks.Solana ||
+      selectedNetwork === Networks.Flow
+    )
+      return
     const initializeWeb3 = async () => {
       const provider = await magic?.wallet.getProvider()
       setWeb3Instance(new Web3(provider))

@@ -5,6 +5,8 @@ import { useWeb3Context } from "../context/Web3Context"
 import { useMagicContext } from "../context/MagicContext"
 import { Networks } from "../utils/networks"
 import { Connection, LAMPORTS_PER_SOL, PublicKey } from "@solana/web3.js"
+/// @ts-ignore
+import * as fcl from "@onflow/fcl"
 
 const UserDetails = () => {
   const { user, setUser } = useUserContext()
@@ -27,7 +29,14 @@ const UserDetails = () => {
         console.log("BALANCE: ", balance)
       } else if (selectedNetwork === Networks.Flow) {
         // TODO: Implement Flow balance fetch
-        return
+        fcl.config({
+          "accessNode.api": "https://rest-testnet.onflow.org",
+        })
+        const account = await fcl.account(user.publicAddress!)
+        console.log("FLOW ACCOUNT: ", JSON.stringify(account, null, 2))
+        const balance = account.balance
+        console.log("Balance: ", balance)
+        newUser = { ...user, balance: balance }
       } else {
         const balance = await web3?.eth.getBalance(user.publicAddress!)
         const balanceInEth = web3?.utils.fromWei(balance!).substring(0, 7)
