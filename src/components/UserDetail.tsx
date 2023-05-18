@@ -33,7 +33,7 @@ const UserDetails = () => {
           "accessNode.api": "https://rest-testnet.onflow.org",
         })
         const account = await fcl.account(user.publicAddress!)
-        console.log("FLOW ACCOUNT: ", JSON.stringify(account, null, 2))
+        // console.log("FLOW ACCOUNT: ", JSON.stringify(account, null, 2))
         const balance = account.balance
         console.log("Balance: ", balance)
         newUser = { ...user, balance: balance }
