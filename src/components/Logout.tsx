@@ -1,10 +1,9 @@
-import React from "react"
 import { Button } from "@chakra-ui/react"
 import { useUserContext } from "../context/UserContext"
 import { useMagicContext } from "../context/MagicContext"
 import { useNavigate } from "react-router-dom"
 
-const Logout: React.FC = () => {
+const Logout = () => {
   const { setUser } = useUserContext()
   const { magic } = useMagicContext()
   const navigate = useNavigate()

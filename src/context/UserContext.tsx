@@ -1,7 +1,7 @@
 import { createContext, useState, useContext, useEffect } from "react"
 import { useMagicContext } from "./MagicContext"
 
-// interface UserBase {
+// export interface UserBase {
 //   issuer?: string | null
 //   publicAddress?: string | null
 //   email?: string | null
