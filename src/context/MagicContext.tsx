@@ -46,27 +46,29 @@ export const MagicProvider = ({ children }: { children: React.ReactNode }) => {
     setSelectedNetwork(network)
 
     let magic
-    if (network === Networks.Solana) {
-      magic = new Magic(magicKey, {
-        extensions: [
-          new SolanaExtension(formattedNetwork(network) as SolanaConfig),
-          new OAuthExtension(),
-        ],
-      })
-    } else if (network === Networks.Flow) {
-      magic = new Magic(magicKey, {
-        extensions: [
-          new FlowExtension(formattedNetwork(network) as FlowConfig),
-          new OAuthExtension(),
-        ],
-      })
-    } else {
-      magic = new Magic(magicKey, {
-        network: formattedNetwork(network),
-        extensions: [new OAuthExtension()],
-      })
+    switch (network) {
+      case Networks.Solana:
+        magic = new Magic(magicKey, {
+          extensions: [
+            new SolanaExtension(formattedNetwork(network) as SolanaConfig),
+            new OAuthExtension(),
+          ],
+        })
+        break
+      case Networks.Flow:
+        magic = new Magic(magicKey, {
+          extensions: [
+            new FlowExtension(formattedNetwork(network) as FlowConfig),
+            new OAuthExtension(),
+          ],
+        })
+        break
+      default:
+        magic = new Magic(magicKey, {
+          network: formattedNetwork(network),
+          extensions: [new OAuthExtension()],
+        })
     }
-
     setMagicInstance(magic)
   }, [])
 
