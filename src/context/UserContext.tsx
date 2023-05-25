@@ -1,5 +1,5 @@
 import { createContext, useState, useContext, useEffect } from "react"
-import { useMagicContext } from "./MagicContext"
+import { useNetworkContext } from "./NetworkContext"
 
 // interface UserBase {
 //   issuer?: string | null
@@ -31,13 +31,13 @@ const UserContext = createContext<UserContextType>({
 export const useUserContext = () => useContext(UserContext)
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
-  const { magic } = useMagicContext()
+  const { network } = useNetworkContext()
   const [user, setUser] = useState<User | null>(null)
 
   const fetchUserInfo = async () => {
     try {
-      if (magic) {
-        const userInfo = await magic.user.getInfo()
+      if (network) {
+        const userInfo = await network.magic?.user.getInfo()
         console.log("UserInfo:", JSON.stringify(userInfo, null, 2))
         setUser(userInfo)
       }
@@ -46,9 +46,9 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }
   useEffect(() => {
-    if (!magic) return
+    if (!network) return
     const checkLoggedInStatus = async () => {
-      const loggedIn = await magic.user.isLoggedIn()
+      const loggedIn = await network.magic?.user.isLoggedIn()
       console.log("LOGGED IN: ", loggedIn)
       if (loggedIn) {
         await fetchUserInfo()
@@ -56,7 +56,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     checkLoggedInStatus()
-  }, [magic])
+  }, [network])
 
   return (
     <UserContext.Provider value={{ user, setUser, fetchUserInfo }}>

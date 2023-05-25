@@ -1,5 +1,5 @@
 import { Networks } from "../utils/networks"
-import { useMagicContext } from "../context/MagicContext"
+import { useNetworkContext } from "../context/NetworkContext"
 import {
   Menu,
   MenuButton,
@@ -21,12 +21,12 @@ const NetworkSelect = () => {
     Networks.Solana,
     Networks.Flow,
   ]
-  const { selectedNetwork, updateMagicInstance } = useMagicContext()
+  const { selectedNetwork, updateNetworkInstance } = useNetworkContext()
 
   const handleNetworkSelected = (networkOption: Networks) => {
     if (networkOption !== selectedNetwork) {
       localStorage.setItem("network", networkOption)
-      updateMagicInstance(networkOption)
+      updateNetworkInstance(networkOption)
       console.log("SELECTED NETWORK: ", networkOption)
     }
   }

@@ -1,58 +1,20 @@
 import { useEffect } from "react"
 import { Box, Text } from "@chakra-ui/react"
 import { useUserContext } from "../context/UserContext"
-import { useWeb3Context } from "../context/Web3Context"
-import { useMagicContext } from "../context/MagicContext"
-import { Networks } from "../utils/networks"
-import { Connection, LAMPORTS_PER_SOL, PublicKey } from "@solana/web3.js"
-///@ts-ignore
-import * as fcl from "@onflow/fcl-1.3.2"
+import { useNetworkContext } from "../context/NetworkContext"
 
 const UserDetails = () => {
   const { user, setUser } = useUserContext()
-  const { web3 } = useWeb3Context()
-  const { selectedNetwork } = useMagicContext()
-
-  const getSolanaBalance = async () => {
-    const connection = new Connection(
-      "https://api.devnet.solana.com",
-      "confirmed"
-    )
-    const balance = await connection.getBalance(
-      new PublicKey(user.publicAddress)
-    )
-    return { ...user, balance: balance / LAMPORTS_PER_SOL }
-  }
-
-  const getFlowBalance = async () => {
-    fcl.config({
-      "accessNode.api": "https://rest-testnet.onflow.org",
-    })
-    const account = await fcl.account(user.publicAddress!)
-    return { ...user, balance: account.balance }
-  }
-
-  const getEVMBalance = async () => {
-    const balance = await web3?.eth.getBalance(user.publicAddress!)
-    const balanceInEth = web3?.utils.fromWei(balance!).substring(0, 7)
-    const chainId = await web3?.eth.net.getId()
-    return { ...user, balance: balanceInEth, chainId: chainId }
-  }
+  const { network } = useNetworkContext()
 
   const fetchBalance = async () => {
     if (!user) return
 
     let newUser
     try {
-      switch (selectedNetwork) {
-        case Networks.Solana:
-          newUser = await getSolanaBalance()
-          break
-        case Networks.Flow:
-          newUser = await getFlowBalance()
-          break
-        default:
-          newUser = await getEVMBalance()
+      if (network) {
+        const balance = await network.fetchBalance(user.publicAddress!)
+        newUser = { ...user, balance }
       }
 
       if (JSON.stringify(user) !== JSON.stringify(newUser)) {
@@ -66,7 +28,7 @@ const UserDetails = () => {
   useEffect(() => {
     console.log("fetching balance")
     fetchBalance()
-  }, [user, selectedNetwork])
+  }, [user])
 
   return (
     <Box padding="5" boxShadow="lg" bg="white">

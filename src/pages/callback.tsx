@@ -2,20 +2,20 @@ import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { useUserContext } from "../context/UserContext"
 import { Spinner, Flex } from "@chakra-ui/react"
-import { useMagicContext } from "../context/MagicContext"
+import { useNetworkContext } from "../context/NetworkContext"
 
 const Callback = () => {
-  const { magic } = useMagicContext()
+  const { network } = useNetworkContext()
   const { setUser } = useUserContext()
   const navigate = useNavigate()
 
   useEffect(() => {
     const finishSocialLogin = async () => {
-      if (!magic) return
+      if (!network) return
 
       try {
-        const result = await magic.oauth.getRedirectResult()
-        const isLoggedIn = await magic.user.isLoggedIn()
+        const result = await network.magic?.oauth.getRedirectResult()
+        const isLoggedIn = await network.magic?.user.isLoggedIn()
 
         if (isLoggedIn && result?.magic.userMetadata) {
           setUser(result.magic.userMetadata)
@@ -28,7 +28,7 @@ const Callback = () => {
     }
 
     finishSocialLogin()
-  }, [magic])
+  }, [network])
 
   return (
     <Flex justifyContent="center">

@@ -9,14 +9,14 @@ import {
 } from "@chakra-ui/react"
 import { EmailIcon, ArrowForwardIcon } from "@chakra-ui/icons"
 import { useUserContext } from "../context/UserContext"
-import { useMagicContext } from "../context/MagicContext"
+import { useNetworkContext } from "../context/NetworkContext"
 import { useNavigate } from "react-router-dom"
 
 const EmailForm = () => {
   const [email, setEmail] = useState("")
 
   const { fetchUserInfo } = useUserContext()
-  const { magic } = useMagicContext()
+  const { network } = useNetworkContext()
   const navigate = useNavigate()
 
   const handleLoginWithEmail = async () => {
@@ -25,7 +25,7 @@ const EmailForm = () => {
     }
 
     try {
-      await magic?.auth.loginWithEmailOTP({ email })
+      await network?.magic?.auth.loginWithEmailOTP({ email })
       await fetchUserInfo()
       navigate("/dashboard")
     } catch (error) {
@@ -49,7 +49,7 @@ const EmailForm = () => {
         />
       </InputGroup>
       <Button leftIcon={<ArrowForwardIcon />} onClick={handleLoginWithEmail}>
-        Send Magic Link
+        Send Network Link
       </Button>
     </VStack>
   )

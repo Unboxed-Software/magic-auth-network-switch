@@ -1,17 +1,16 @@
-import React from "react"
 import { Button } from "@chakra-ui/react"
 import { useUserContext } from "../context/UserContext"
-import { useMagicContext } from "../context/MagicContext"
+import { useNetworkContext } from "../context/NetworkContext"
 import { useNavigate } from "react-router-dom"
 
-const Logout: React.FC = () => {
+const Logout = () => {
   const { setUser } = useUserContext()
-  const { magic } = useMagicContext()
+  const { network } = useNetworkContext()
   const navigate = useNavigate()
 
   const handleLogout = async () => {
     try {
-      await magic?.user.logout()
+      await network?.magic?.user.logout()
       setUser(null)
       navigate("/")
     } catch (error) {

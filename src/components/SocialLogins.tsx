@@ -1,17 +1,17 @@
 import { useState } from "react"
 import { Button, Center, VStack } from "@chakra-ui/react"
-import { useMagicContext } from "../context/MagicContext"
+import { useNetworkContext } from "../context/NetworkContext"
 import { OAuthProvider } from "@magic-ext/oauth"
 
 const SocialLogins = () => {
-  const { magic } = useMagicContext()
+  const { network } = useNetworkContext()
   const [isRedirecting, setIsRedirecting] = useState(false)
   const providers = ["google", "github"] as OAuthProvider[]
 
   async function handleLoginWithSocial(provider: OAuthProvider) {
     setIsRedirecting(true)
     try {
-      await magic?.oauth.loginWithRedirect({
+      await network?.magic?.oauth.loginWithRedirect({
         provider,
         redirectURI: new URL("/callback", window.location.origin).href,
       })
