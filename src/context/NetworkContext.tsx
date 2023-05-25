@@ -5,13 +5,13 @@ import {
   useEffect,
   useState,
 } from "react"
-import { Networks } from "../utils/networks"
-import { EVM, Solana, Flow, Network } from "../utils/network"
+import { Network, EVM, Solana, Flow, MagicNetwork } from "../utils/networks"
+import {} from "../utils/networks"
 
 export type NetworkContextType = {
-  network: Network | null
-  updateNetworkInstance: (network: Networks) => void
-  selectedNetwork: Networks | null
+  network: MagicNetwork | null
+  updateNetworkInstance: (network: Network) => void
+  selectedNetwork: Network | null
 }
 
 export const NetworkContext = createContext<NetworkContextType>({
@@ -27,18 +27,20 @@ export const NetworkProvider = ({
 }: {
   children: React.ReactNode
 }) => {
-  const [selectedNetwork, setSelectedNetwork] = useState<Networks | null>(
-    Networks.Ethereum
+  const [selectedNetwork, setSelectedNetwork] = useState<Network | null>(
+    Network.Ethereum
   )
-  const [networkInstance, setNetworkInstance] = useState<Network | null>(null)
-  const updateNetworkInstance = useCallback(async (network: Networks) => {
+  const [networkInstance, setNetworkInstance] = useState<MagicNetwork | null>(
+    null
+  )
+  const updateNetworkInstance = useCallback(async (network: Network) => {
     setSelectedNetwork(network)
     let networkInstance
     switch (network) {
-      case Networks.Solana:
+      case Network.Solana:
         networkInstance = new Solana()
         break
-      case Networks.Flow:
+      case Network.Flow:
         networkInstance = new Flow()
         break
       default:
@@ -49,7 +51,7 @@ export const NetworkProvider = ({
 
   useEffect(() => {
     const storedNetwork =
-      (localStorage.getItem("network") as Networks | null) || Networks.Ethereum
+      (localStorage.getItem("network") as Network | null) || Network.Ethereum
     setSelectedNetwork(storedNetwork)
     updateNetworkInstance(storedNetwork)
   }, [])

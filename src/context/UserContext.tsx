@@ -1,4 +1,10 @@
-import { createContext, useState, useContext, useEffect } from "react"
+import {
+  createContext,
+  useState,
+  useContext,
+  useEffect,
+  useCallback,
+} from "react"
 import { useNetworkContext } from "./NetworkContext"
 
 // interface UserBase {
@@ -34,21 +40,22 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const { network } = useNetworkContext()
   const [user, setUser] = useState<User | null>(null)
 
-  const fetchUserInfo = async () => {
+  const fetchUserInfo = useCallback(async () => {
     try {
       if (network) {
-        const userInfo = await network.magic?.user.getInfo()
+        const userInfo = await network?.magic?.user.getInfo()
         console.log("UserInfo:", JSON.stringify(userInfo, null, 2))
         setUser(userInfo)
       }
     } catch (error) {
       console.log("fetchuserInfo", error)
     }
-  }
+  }, [setUser, network])
+
   useEffect(() => {
     if (!network) return
     const checkLoggedInStatus = async () => {
-      const loggedIn = await network.magic?.user.isLoggedIn()
+      const loggedIn = await network?.magic?.user.isLoggedIn()
       console.log("LOGGED IN: ", loggedIn)
       if (loggedIn) {
         await fetchUserInfo()
@@ -56,7 +63,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     checkLoggedInStatus()
-  }, [network])
+  }, [network, fetchUserInfo])
 
   return (
     <UserContext.Provider value={{ user, setUser, fetchUserInfo }}>

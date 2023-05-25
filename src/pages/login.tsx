@@ -14,7 +14,7 @@ const Login = () => {
     if (user) {
       navigate("/dashboard")
     }
-  }, [user])
+  }, [user, navigate])
 
   return (
     <VStack justifyContent="center" alignItems="center" minH="100vh">

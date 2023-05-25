@@ -25,7 +25,7 @@ const EmailForm = () => {
     }
 
     try {
-      await network?.magic?.auth.loginWithEmailOTP({ email })
+      await network?.loginWithOTP(email)
       await fetchUserInfo()
       navigate("/dashboard")
     } catch (error) {

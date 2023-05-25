@@ -10,7 +10,7 @@ const Logout = () => {
 
   const handleLogout = async () => {
     try {
-      await network?.magic?.user.logout()
+      await network?.logout()
       setUser(null)
       navigate("/")
     } catch (error) {

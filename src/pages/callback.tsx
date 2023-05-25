@@ -14,8 +14,8 @@ const Callback = () => {
       if (!network) return
 
       try {
-        const result = await network.magic?.oauth.getRedirectResult()
-        const isLoggedIn = await network.magic?.user.isLoggedIn()
+        const result = await network?.getRedirectResult()
+        const isLoggedIn = await network?.isLoggedIn()
 
         if (isLoggedIn && result?.magic.userMetadata) {
           setUser(result.magic.userMetadata)
@@ -28,7 +28,7 @@ const Callback = () => {
     }
 
     finishSocialLogin()
-  }, [network])
+  }, [network, navigate, setUser])
 
   return (
     <Flex justifyContent="center">
