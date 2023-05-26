@@ -1,4 +1,4 @@
-import { Networks } from "../utils/networks"
+import { Network } from "../network.ts/supported-networks"
 import { useNetworkContext } from "../context/NetworkContext"
 import {
   Menu,
@@ -13,20 +13,13 @@ import {
 import { ChevronDownIcon, CheckIcon } from "@chakra-ui/icons"
 
 const NetworkSelect = () => {
-  const networkOptions = [
-    Networks.Ethereum,
-    Networks.Polygon,
-    Networks.Optimism,
-    Networks.Sepolia,
-    Networks.Solana,
-    Networks.Flow,
-  ]
-  const { selectedNetwork, updateNetworkInstance } = useNetworkContext()
+  const networkOptions = Object.values(Network)
+  const { selectedNetwork, updateMagicNetwork } = useNetworkContext()
 
-  const handleNetworkSelected = (networkOption: Networks) => {
+  const handleNetworkSelected = (networkOption: Network) => {
     if (networkOption !== selectedNetwork) {
       localStorage.setItem("network", networkOption)
-      updateNetworkInstance(networkOption)
+      updateMagicNetwork(networkOption)
       console.log("SELECTED NETWORK: ", networkOption)
     }
   }

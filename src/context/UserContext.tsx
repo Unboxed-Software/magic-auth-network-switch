@@ -37,7 +37,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const fetchUserInfo = async () => {
     try {
       if (network) {
-        const userInfo = await network.magic?.user.getInfo()
+        const userInfo = await network.getInfo()
         console.log("UserInfo:", JSON.stringify(userInfo, null, 2))
         setUser(userInfo)
       }
@@ -48,7 +48,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     if (!network) return
     const checkLoggedInStatus = async () => {
-      const loggedIn = await network.magic?.user.isLoggedIn()
+      const loggedIn = await network.isLoggedIn()
       console.log("LOGGED IN: ", loggedIn)
       if (loggedIn) {
         await fetchUserInfo()

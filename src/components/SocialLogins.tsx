@@ -11,10 +11,10 @@ const SocialLogins = () => {
   async function handleLoginWithSocial(provider: OAuthProvider) {
     setIsRedirecting(true)
     try {
-      await network?.magic?.oauth.loginWithRedirect({
+      await network?.loginWithSocial(
         provider,
-        redirectURI: new URL("/callback", window.location.origin).href,
-      })
+        new URL("/callback", window.location.origin).href
+      )
     } catch (error) {
       console.log("handleLoginWithSocial", error)
       setIsRedirecting(false)
