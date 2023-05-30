@@ -13,12 +13,18 @@ import {
 import { ChevronDownIcon, CheckIcon } from "@chakra-ui/icons"
 
 const NetworkSelect = () => {
+  // Get list of available networks
   const networkOptions = Object.values(Network)
+
+  // Get current selected network and updateMagicNetwork function from network context
   const { selectedNetwork, updateMagicNetwork } = useNetworkContext()
 
+  // Define a function to handle network selection
   const handleNetworkSelected = (networkOption: Network) => {
     if (networkOption !== selectedNetwork) {
+      // Store the selected network in localStorage
       localStorage.setItem("network", networkOption)
+      // Update the selected network in the context
       updateMagicNetwork(networkOption)
       console.log("SELECTED NETWORK: ", networkOption)
     }

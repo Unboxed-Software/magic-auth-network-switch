@@ -1,39 +1,32 @@
 import { createContext, useState, useContext, useEffect } from "react"
 import { useNetworkContext } from "./NetworkContext"
 
-// interface UserBase {
-//   issuer?: string | null
-//   publicAddress?: string | null
-//   email?: string | null
-//   isMfaEnabled?: boolean
-//   phoneNumber?: string | null
-//   walletType?: string | null
-//   balance?: number
-//   chainId?: number
-// }
-
-// export type User = UserBase & { [key: string]: any }
-
-export type User = any
-
-export type UserContextType = {
-  user: User | null
-  setUser: React.Dispatch<React.SetStateAction<User | null>>
+// Define context
+type UserContextType = {
+  user: any
+  setUser: React.Dispatch<React.SetStateAction<any>>
   fetchUserInfo: () => void
 }
 
+// Create context with a default value
 const UserContext = createContext<UserContextType>({
-  user: null,
-  setUser: () => {},
-  fetchUserInfo: () => {},
+  user: null, // Initially, no user is logged in
+  setUser: () => {}, // Placeholder function, will be overwritten by provider
+  fetchUserInfo: () => {}, // Placeholder function, will be overwritten by provider
 })
 
+// A custom hook to use context
 export const useUserContext = () => useContext(UserContext)
 
+// Provider component that wraps the app
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
+  // Access the network context
   const { network } = useNetworkContext()
-  const [user, setUser] = useState<User | null>(null)
 
+  // Local state for storing user data
+  const [user, setUser] = useState<any>(null)
+
+  // Function to fetch user information from magic
   const fetchUserInfo = async () => {
     try {
       if (network) {
@@ -42,15 +35,19 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         setUser(userInfo)
       }
     } catch (error) {
-      console.log("fetchuserInfo", error)
+      console.log(error)
     }
   }
+
   useEffect(() => {
     if (!network) return
+
+    // Check if user is logged in
     const checkLoggedInStatus = async () => {
       const loggedIn = await network.isLoggedIn()
       console.log("LOGGED IN: ", loggedIn)
       if (loggedIn) {
+        // If logged in, fetch user info
         await fetchUserInfo()
       }
     }

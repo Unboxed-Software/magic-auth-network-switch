@@ -2,6 +2,7 @@ import { EthNetworkConfiguration } from "magic-sdk"
 import { FlowConfig } from "@magic-ext/flow/dist/types/type"
 import { SolanaConfig } from "@magic-ext/solana/dist/types/type"
 
+// Define Network enum that represents supported networks
 export enum Network {
   Ethereum = "Ethereum (Goerli)",
   Sepolia = "Ethereum (Sepolia)",
@@ -11,6 +12,7 @@ export enum Network {
   Flow = "Flow (Testnet)",
 }
 
+// Function to return the network configuration based on the selected network.
 export const formattedNetwork = (
   selectedNetwork: Network
 ): EthNetworkConfiguration | FlowConfig | SolanaConfig => {

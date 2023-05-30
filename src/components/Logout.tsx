@@ -4,10 +4,14 @@ import { useNetworkContext } from "../context/NetworkContext"
 import { useNavigate } from "react-router-dom"
 
 const Logout = () => {
+  // Use context to get the setUser function from UserContext
   const { setUser } = useUserContext()
+
+  // Get the current network from NetworkContext
   const { network } = useNetworkContext()
   const navigate = useNavigate()
 
+  // Define the async function to handle user logout
   const handleLogout = async () => {
     try {
       await network?.logout()

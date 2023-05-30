@@ -13,12 +13,17 @@ import { useNetworkContext } from "../context/NetworkContext"
 import { useNavigate } from "react-router-dom"
 
 const EmailForm = () => {
+  // Define local state for email input
   const [email, setEmail] = useState("")
 
+  // Use context to get the fetchUserInfo function from UserContext
   const { fetchUserInfo } = useUserContext()
+
+  // Get the current network from NetworkContext
   const { network } = useNetworkContext()
   const navigate = useNavigate()
 
+  // Define the async function to handle login with email
   const handleLoginWithEmail = async () => {
     if (!email) {
       return

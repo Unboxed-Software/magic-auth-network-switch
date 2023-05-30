@@ -4,10 +4,15 @@ import { useNetworkContext } from "../context/NetworkContext"
 import { OAuthProvider } from "@magic-ext/oauth"
 
 const SocialLogins = () => {
+  // Get the current network from NetworkContext
   const { network } = useNetworkContext()
-  const [isRedirecting, setIsRedirecting] = useState(false)
+
+  // Define social providers
   const providers = ["google", "github"] as OAuthProvider[]
 
+  const [isRedirecting, setIsRedirecting] = useState(false)
+
+  // Define async function to handle login with social providers
   async function handleLoginWithSocial(provider: OAuthProvider) {
     setIsRedirecting(true)
     try {

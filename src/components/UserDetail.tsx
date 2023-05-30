@@ -4,19 +4,26 @@ import { useUserContext } from "../context/UserContext"
 import { useNetworkContext } from "../context/NetworkContext"
 
 const UserDetails = () => {
+  // Use context to get user and setUser function from UserContext
   const { user, setUser } = useUserContext()
+
+  // Get the current network from NetworkContext
   const { network } = useNetworkContext()
 
+  // Define the function to fetch the balance
   const fetchBalance = async () => {
     if (!user) return
 
     let newUser
     try {
+      // Check if network exists and then fetch balance
       if (network) {
         const balance = await network.fetchBalance(user.publicAddress!)
+        // Create a new user object with the updated balance
         newUser = { ...user, balance }
       }
 
+      // Check if the user object has changed and then update it
       if (JSON.stringify(user) !== JSON.stringify(newUser)) {
         setUser(newUser)
       }
